@@ -1,6 +1,9 @@
 package com.examplecorp.productapp.service.impl;
 
 import com.examplecorp.productapp.dto.ProductDto;
+import com.examplecorp.productapp.entity.Product;
+import com.examplecorp.productapp.enums.ResponseCode;
+import com.examplecorp.productapp.exception.ProductNotFoundException;
 import com.examplecorp.productapp.repository.ProductRepository;
 import com.examplecorp.productapp.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,5 +29,13 @@ public class ProductServiceImpl implements ProductService {
                         .stream()
                         .map(product -> objectMapper.convertValue(product, ProductDto.class))
                         .toList());
+    }
+
+    @Override
+    public ResponseEntity<ProductDto> getProductById(Integer id) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException(ResponseCode.PRODUCT_NOT_FOUND.getMessage()));
+
+        return ResponseEntity.ok(objectMapper.convertValue(product, ProductDto.class));
     }
 }

@@ -23,4 +23,9 @@ public class ProductController {
                                                         @PathVariable Integer pageSize) {
         return productService.retrieveAll(pageNumber, pageSize);
     }
+
+    @GetMapping("/by-id/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Integer id) {
+        return productService.getProductById(id);
+    }
 }

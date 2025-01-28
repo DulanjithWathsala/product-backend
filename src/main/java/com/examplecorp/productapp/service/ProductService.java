@@ -8,4 +8,6 @@ import java.util.List;
 public interface ProductService {
 
     ResponseEntity<List<ProductDto>> retrieveAll(Integer pageNumber, Integer pageSize);
+
+    ResponseEntity<ProductDto> getProductById(Integer id);
 }
